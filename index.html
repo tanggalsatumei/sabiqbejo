@@ -11,52 +11,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
   :root {
-    --primary: #000;
-    --accent: #ffd700;
-    --bg: #fff;
-    --text: #333;
-    --cart-bg: #fff;
-    --cart-text: #000;
-  }
-
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s, color 0.3s;
-  }
-
-  header, #hero {
-    background: var(--primary);
-    color: var(--accent);
-    text-align: center;
-    padding: 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  nav ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 1rem;
-  }
-
-  nav a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: bold;
-  }
+      --primary: #000;
+      --accent: #ffd700;
+      --bg: #fff;
+      --text: #333;
+      --cart-bg: #fff;
+      --cart-text: #000;
+    }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--primary);
+      color: var(--accent);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
+    }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
 
   .menu-toggle {
     display: none;
@@ -96,13 +89,13 @@
   }
 
   .btn {
-    background: var(--accent);
-    color: var(--primary);
-    padding: 0.6rem 1rem;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.6rem 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
 
   .btn-toggle {
     margin-left: 1rem;
@@ -212,38 +205,47 @@
   }
 
   .floating-cart {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--accent);
-    color: var(--primary);
-    padding: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .cart-items {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background: var(--cart-bg);
-    color: var(--cart-text);
-    border: 1px solid #ccc;
-    padding: 1rem;
-    width: 300px;
-    max-height: 300px;
-    overflow-y: auto;
-    border-radius: 8px;
-    z-index: 999;
-  }
-
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--primary);
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 2000;
+    }
+    .cart-items {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--cart-bg);
+      color: var(--cart-text);
+      border: 1px solid #ccc;
+      padding: 1rem;
+      width: 300px;
+      max-height: 300px;
+      overflow-y: auto;
+      border-radius: 8px;
+      z-index: 2000;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: red;
+      color: white;
+      font-size: 0.8rem;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
 
   .certificates img {
     width: 80px;
@@ -272,84 +274,72 @@
     font-weight: bold;
   }
 
-  section#hero {
-  position: relative;
-  height: 80vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slide {
-  width: 100%;
-  height: 100%;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  background-size: cover;
-  background-position: center;
-}
-
-
-  .slide-content {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 2rem;
-    border-radius: 1rem;
-  }
-
-  .slide-content img {
-    width: 250px;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    background: transparent;
-  }
-
-  .slide-text {
-    color: #ffd700;
-  }
-
-  .slide.active {
-    opacity: 1;
-  }
-
-  .slide-text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .slide-text p {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-
-  .dots {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-  }
-
-  .dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    background: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    opacity: 0.6;
-  }
-
-  .dot.active {
-    background: #ffd700;
-    opacity: 1;
-  }
+  #hero {
+      position: relative;
+      height: 80vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.6s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide.active {
+      opacity: 1;
+    }
+    .slide-content {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      padding: 2rem;
+      background: rgba(255,255,255,0.9);
+      border-radius: 1rem;
+      max-width: 1000px;
+      z-index: 10;
+    }
+    .slide-content img {
+      width: 250px;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      background: transparent;
+    }
+    .slide-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .slide-text p {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      z-index: 20;
+    }
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .dot.active {
+      background: #ffd700;
+      opacity: 1;
+    }
 
   footer {
     display: flex;
@@ -483,36 +473,32 @@
 </nav>
 
 </header>
-  <section id="hero">
-  <div class="slide active" style="background-image: url('https://tse3.mm.bing.net/th/id/OIP.brd1mvVkN59LUpbUeez76gHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3')">
-    <div class="slide-content">
-      <img src="https://tse1.mm.bing.net/th/id/OIP.rxiw_oaGsvDBczgvlcHbUgHaGl?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Produk 1" />
-      <div class="slide-text">
-        <h2>Telur Asin Original</h2>
-        <p>Rasa gurih, tekstur lembut. Cocok untuk sarapan & hampers!</p>
-        <a href="https://wa.me/62xxxxxxxxxx" class="btn">Hubungi Sekarang</a>
+  <div id="hero">
+    <div class="slide active" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.brd1mvVkN59LUpbUeez76gHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3')">
+      <div class="slide-content">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.rxiw_oaGsvDBczgvlcHbUgHaGl?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Produk 1">
+        <div class="slide-text">
+          <h2>Telur Asin Original</h2>
+          <p>Rasa gurih, tekstur lembut. Cocok untuk sarapan & hampers!</p>
+          <a href="https://wa.me/62856xxxxx" class="btn">Hubungi Sekarang</a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="slide" style="background-color: #eee;">
-    <div class="slide-content">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Coat_of_arms_of_Lamongan_Regency.svg" alt="Produk 2" />
-      <div class="slide-text">
-        <h2>Telur Asin Panggang</h2>
-        <p>Dibakar dengan rempah pilihan. Wangi dan gurih maksimal!</p>
-        <a href="https://wa.me/62xxxxxxxxxx" class="btn">Pesan Sekarang</a>
+    <div class="slide" style="background-color:#eee">
+      <div class="slide-content">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Coat_of_arms_of_Lamongan_Regency.svg" alt="Produk 2">
+        <div class="slide-text">
+          <h2>Telur Asin Panggang</h2>
+          <p>Dibakar dengan rempah pilihan. Wangi dan gurih maksimal!</p>
+          <a href="https://wa.me/62856xxxxx" class="btn">Pesan Sekarang</a>
+        </div>
       </div>
     </div>
+    <div class="dots">
+      <span class="dot active" onclick="showSlide(0)"></span>
+      <span class="dot" onclick="showSlide(1)"></span>
+    </div>
   </div>
-
-  <!-- dots navigasi -->
-  <div class="dots">
-    <span class="dot active" onclick="showSlide(0)"></span>
-    <span class="dot" onclick="showSlide(1)"></span>
-  </div>
-</section>
-
 
 <section id="products">
   <h2>Produk Unggulan</h2>
@@ -622,8 +608,10 @@
 </footer>
 
 
-<div class="floating-cart" onclick="toggleCart()">🛒 Keranjang</div>
-<div class="cart-items" id="cartBox"></div>
+<div class="floating-cart" onclick="toggleCart()">
+    🛒 <span id="cartBadge" class="cart-badge" style="display:none">0</span>
+  </div>
+  <div class="cart-items" id="cartBox"></div>
 <script>
   let current = 0;
   const slides = document.querySelectorAll('.slide');
@@ -692,55 +680,49 @@
 
 <script>
   const cart = [];
-
-  function addToCart(name, price) {
-    const item = cart.find(i => i.name === name);
-    if (item) {
-      item.qty++;
-    } else {
-      cart.push({ name, price, qty: 1 });
+    function addToCart(name, price) {
+      const item = cart.find(i => i.name === name);
+      if (item) {
+        item.qty++;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      renderCart();
     }
-    renderCart();
-  }
-
-  function renderCart() {
-    const box = document.getElementById('cartBox');
-    box.innerHTML = '<h3>Review Pesanan</h3>' + cart.map(item => `
-      <div class="cart-item">
-        ${item.name} (x${item.qty}) - Rp ${item.qty * item.price}
-        <button onclick="updateQty('${item.name}', -1)">−</button>
-        <button onclick="updateQty('${item.name}', 1)">+</button>
-      </div>
-    `).join('') + '<button class="btn" onclick="checkout()">Checkout</button>';
-  }
-
-  function updateQty(name, change) {
-    const item = cart.find(i => i.name === name);
-    if (!item) return;
-    item.qty += change;
-    if (item.qty <= 0) {
-      const index = cart.indexOf(item);
-      cart.splice(index, 1);
+    function renderCart() {
+      const box = document.getElementById('cartBox');
+      const badge = document.getElementById('cartBadge');
+      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      badge.innerText = totalItems;
+      badge.style.display = totalItems ? 'inline-block' : 'none';
+      box.innerHTML = '<h3>Review Pesanan</h3>' + cart.map(item => `
+        <div class="cart-item">
+          ${item.name} (x${item.qty}) - Rp ${item.qty * item.price}
+          <button onclick="updateQty('${item.name}', -1)">−</button>
+          <button onclick="updateQty('${item.name}', 1)">+</button>
+        </div>
+      `).join('') + '<button class="btn" onclick="checkout()">Checkout</button>';
     }
-    renderCart();
-  }
-
-  function toggleCart() {
-    const box = document.getElementById('cartBox');
-    box.style.display = (box.style.display === 'block') ? 'none' : 'block';
-  }
-
-  function checkout() {
-    let message = 'Saya ingin memesan:%0A';
-    cart.forEach(item => {
-      message += `- ${item.name} x${item.qty} (Rp ${item.qty * item.price})%0A`;
-    });
-    window.open('https://wa.me/6285645046550?text=' + message, '_blank');
-  }
-
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-  }
+    function updateQty(name, change) {
+      const item = cart.find(i => i.name === name);
+      if (!item) return;
+      item.qty += change;
+      if (item.qty <= 0) {
+        cart.splice(cart.indexOf(item), 1);
+      }
+      renderCart();
+    }
+    function toggleCart() {
+      const box = document.getElementById('cartBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+    function checkout() {
+      let message = 'Saya ingin memesan:%0A';
+      cart.forEach(item => {
+        message += `- ${item.name} x${item.qty} (Rp ${item.qty * item.price})%0A`;
+      });
+      window.open('https://wa.me/62856xxxxx?text=' + message, '_blank');
+    }
 </script>
 
 </body>
