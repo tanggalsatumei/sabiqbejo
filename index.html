@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>CV. Sabiq Bejo - Telur Asin & Olahan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>CV. Sabiq Bejo</h1>
+    <p>Telur Asin & Olahan Bebek Khas Lamongan</p>
+    <button class="btn" onclick="window.location='#contact'">Hubungi Kami</button>
+  </header>
+
+  <section id="about">
+    <h2>Tentang Kami</h2>
+    <p>Sabiq Bejo berdiri sejak 2009 di Kalitengah, Lamongan. Kami memproduksi telur asin dan olahan kreatif seperti sambal, abon, dan kerupuk telur asin dari bahan alami.</p>
+  </section>
+
+  <section id="products">
+    <h2>Produk Unggulan</h2>
+    <div class="card">
+      <h3>Telur Asin Original</h3>
+      <p>Rp 40.000</p>
+      <button onclick="tambahProduk('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <h3>Sambal Telur Asin</h3>
+      <p>Rp 25.000</p>
+      <button onclick="tambahProduk('Sambal Telur Asin', 25000)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <h3>Abon Telur Asin</h3>
+      <p>Rp 15.000</p>
+      <button onclick="tambahProduk('Abon Telur Asin', 15000)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <h3>Makaroni Telur Asin</h3>
+      <p>Rp 15.000</p>
+      <button onclick="tambahProduk('Makaroni Telur Asin', 15000)">Tambah ke Keranjang</button>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Testimoni</h2>
+    <blockquote>"Telurnya kenyal, rasa asin pas, nggak amis!"</blockquote>
+    <blockquote>"Sambalnya pedas mantap, cocok buat oleh-oleh."</blockquote>
+  </section>
+
+  <section id="contact">
+    <h2>Kontak</h2>
+    <p>WhatsApp: <a href="https://wa.me/6285645046550">0856-4504-6550</a></p>
+    <p>Instagram: <a href="https://instagram.com/sabiq.official">@sabiq.official</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 CV. Sabiq Bejo | Halal | PIRT | UMKM Jatim</p>
+  </footer>
+
+  <!-- Floating Cart -->
+  <div id="keranjang">
+    <h4>🛒 Keranjang</h4>
+    <div id="keranjang-isi"></div>
+    <p id="keranjang-total">Total: Rp 0</p>
+    <button onclick="kirimWhatsApp()">Checkout via WA</button>
+  </div>
+
+  <script>
+    let keranjang = [];
+
+    function tambahProduk(nama, harga) {
+      const index = keranjang.findIndex(item => item.nama === nama);
+      if (index !== -1) {
+        keranjang[index].jumlah += 1;
+      } else {
+        keranjang.push({ nama, harga, jumlah: 1 });
+      }
+      renderKeranjang();
+    }
+
+    function kurangiProduk(nama) {
+      const index = keranjang.findIndex(item => item.nama === nama);
+      if (index !== -1) {
+        keranjang[index].jumlah -= 1;
+        if (keranjang[index].jumlah === 0) keranjang.splice(index, 1);
+      }
+      renderKeranjang();
+    }
+
+    function renderKeranjang() {
+      const container = document.getElementById('keranjang-isi');
+      container.innerHTML = '';
+
+      let total = 0;
+      keranjang.forEach(item => {
+        total += item.harga * item.jumlah;
+        container.innerHTML += `
+          <div>
+            ${item.nama} x ${item.jumlah} 
+            <button onclick="kurangiProduk('${item.nama}')">−</button>
+            <button onclick="tambahProduk('${item.nama}', ${item.harga})">+</button>
+          </div>
+        `;
+      });
+
+      document.getElementById('keranjang-total').textContent = 'Total: Rp ' + total.toLocaleString();
+    }
+
+    function kirimWhatsApp() {
+      let teks = '*Pesanan CV. Sabiq Bejo:*\n';
+      keranjang.forEach(item => {
+        teks += `- ${item.nama} x ${item.jumlah}\n`;
+      });
+      const total = keranjang.reduce((acc, item) => acc + (item.harga * item.jumlah), 0);
+      teks += `\nTotal: Rp ${total.toLocaleString()}`;
+      window.open(`https://wa.me/6285645046550?text=${encodeURIComponent(teks)}`);
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: #333;
+    }
+    header {
+      background: #000;
+      color: #ffd700;
+      padding: 2rem;
+      text-align: center;
+    }
+    .btn {
+      background: #ffd700;
+      color: #000;
+      padding: .8rem 1.2rem;
+      border: none;
+      cursor: pointer;
+    }
+    section {
+      padding: 2rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: .5rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    #keranjang {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ffd700;
+      color: #000;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 999;
+      width: 250px;
+    }
+    #keranjang button {
+      margin: 0 5px;
+      padding: 2px 6px;
+      font-size: 16px;
+    }
+  </style>
+</body>
+</html>
