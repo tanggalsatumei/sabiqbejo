@@ -24,6 +24,37 @@
     .cart-items {display: none; position: fixed; bottom: 80px; right: 20px; background: #fff; border: 1px solid #ccc; padding: 1rem; width: 300px; max-height: 300px; overflow-y: auto; border-radius: 8px;}
     .cart-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;}
     .certificates img {width:80px; margin-right:10px;}
+        :root {
+      --primary: #000;
+      --accent: #ffd700;
+      --bg: #fff;
+      --text: #333;
+    }
+    body {margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition: background .3s, color .3s;}
+    header, #hero {background:var(--primary); color:var(--accent); text-align:center; padding:1rem;}
+    .btn {background:var(--accent); color:var(--primary); padding:.8rem 1.2rem; border:none; cursor:pointer;}
+    section {padding:2rem; max-width:1200px; margin:auto;}
+    .card {border:1px solid #ddd; padding:1rem; border-radius:.5rem; margin:1rem; text-align:center; display:flex; flex-direction:column; align-items:center;}
+    .card img {width:100%; max-width:200px; border-radius:10px; margin-bottom:1rem;}
+    .products-grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;}
+    .gallery img {max-width:100%; height:auto; margin:5px; border:2px solid #ccc;}
+    .faq details {margin-bottom:1rem;}
+    .dark-mode {--bg:#000; --text:#fff;}
+    .stars {color: gold; font-size: 1.2rem;}
+    .floating-cart {position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: var(--primary); padding: 1rem; border-radius: 8px; cursor: pointer;}
+    .cart-items {display: none; position: fixed; bottom: 80px; right: 20px; background: #fff; border: 1px solid #ccc; padding: 1rem; width: 300px; max-height: 300px; overflow-y: auto; border-radius: 8px; z-index: 999;}
+    .cart-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;}
+    .certificates img {width:80px; margin-right:10px;}
+
+    #hero {position:relative; height:80vh; overflow:hidden;}
+    .slide {position:absolute; top:0; left:0; width:100%; height:100%; background-size:cover; background-position:center; opacity:0; transition:opacity .6s; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:0; color:#ffd700;}
+    .slide:before {content:''; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:-1;}
+    .slide.active {opacity:1;}
+    .slide h2 {font-size:2.5rem; margin-bottom:.5rem;}
+    .slide p {font-size:1.2rem; margin-bottom:1rem;}
+    .dots {position:absolute; bottom:10px; width:100%; text-align:center; z-index:1;}
+    .dot {display:inline-block; width:12px; height:12px; margin:0 5px; background:#fff; border-radius:50%; cursor:pointer; opacity:.6;}
+    .dot.active {background:#ffd700; opacity:1;}
   </style>
 </head>
 <body>
@@ -33,19 +64,68 @@
   <button class="btn" onclick="window.location='https://wa.me/6285645046550'">Hubungi Sekarang</button>
 </header>
 
+<section id="hero">
+  <div class="slider">
+    <div class="slide active" style="background-image:url('slider1.jpg')">
+      <h2>Telur Asin Original Khas Lamongan</h2>
+      <p>Kenyal, rasa pas, tanpa bahan pengawet.</p>
+      <button class="btn" onclick="window.location='https://wa.me/6285645046550?text=Saya+mau+pesan+Telur+Asin+Original'">Pesan Sekarang</button>
+    </div>
+    <div class="slide" style="background-image:url('slider2.jpg')">
+      <h2>Sambal Telur Asin Pedas Mantap</h2>
+      <p>Level 1 & 2, sambal pertama di Indonesia.</p>
+      <button class="btn" onclick="window.location='https://wa.me/6285645046550?text=Saya+mau+pesan+Sambal+Telur+Asin'">Pesan Sekarang</button>
+    </div>
+    <div class="slide" style="background-image:url('slider3.jpg')">
+      <h2>Kerupuk & Abon Telur Asin</h2>
+      <p>Renyah, gurih, cocok untuk camilan dan oleh-oleh.</p>
+      <button class="btn" onclick="window.location='https://wa.me/6285645046550?text=Saya+mau+pesan+Kerupuk+atau+Abon+Telur+Asin'">Pesan Sekarang</button>
+    </div>
+    <div class="slide" style="background-image:url('slider4.jpg')">
+      <h2>Makaroni Telur Asin</h2>
+      <p>Lezat, tahan lama, siap dikirim ke seluruh Indonesia.</p>
+      <button class="btn" onclick="window.location='https://wa.me/6285645046550?text=Saya+mau+pesan+Makaroni+Telur+Asin'">Pesan Sekarang</button>
+    </div>
+  </div>
+  <div class="dots">
+    <span onclick="goSlide(0)" class="dot active"></span>
+    <span onclick="goSlide(1)" class="dot"></span>
+    <span onclick="goSlide(2)" class="dot"></span>
+    <span onclick="goSlide(3)" class="dot"></span>
+  </div>
+</section>
+
 <section id="products">
   <h2>Produk Unggulan</h2>
-  <div class="card">
-    <h3>Telur Asin Original</h3>
-    <p>Rp 40.000 – tekstur kenyal, rasa pas</p>
-    <div class="stars">★★★★★</div>
-    <button class="btn" onclick="addToCart('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
-  </div>
-  <div class="card">
-    <h3>Sambal Telur Asin</h3>
-    <p>Rp 25.000 – pedas mantap, cocok untuk oleh-oleh</p>
-    <div class="stars">★★★★☆</div>
-    <button class="btn" onclick="addToCart('Sambal Telur Asin', 25000)">Tambah ke Keranjang</button>
+  <div class="products-grid">
+    <div class="card">
+      <img src="telur-asin.jpg" alt="Telur Asin">
+      <h3>Telur Asin Original</h3>
+      <p>Rp 40.000 – tekstur kenyal, rasa pas</p>
+      <div class="stars">★★★★★</div>
+      <button class="btn" onclick="addToCart('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <img src="sambal.jpg" alt="Sambal Telur Asin">
+      <h3>Sambal Telur Asin</h3>
+      <p>Rp 25.000 – pedas mantap, cocok untuk oleh-oleh</p>
+      <div class="stars">★★★★☆</div>
+      <button class="btn" onclick="addToCart('Sambal Telur Asin', 25000)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <img src="kerupuk.jpg" alt="Kerupuk Telur Asin">
+      <h3>Kerupuk Telur Asin</h3>
+      <p>Rp 8.500 – renyah dan gurih</p>
+      <div class="stars">★★★★☆</div>
+      <button class="btn" onclick="addToCart('Kerupuk Telur Asin', 8500)">Tambah ke Keranjang</button>
+    </div>
+    <div class="card">
+      <img src="makaroni.jpg" alt="Makaroni Telur Asin">
+      <h3>Makaroni Telur Asin</h3>
+      <p>Rp 15.000 – camilan khas telur asin</p>
+      <div class="stars">★★★☆☆</div>
+      <button class="btn" onclick="addToCart('Makaroni Telur Asin', 15000)">Tambah ke Keranjang</button>
+    </div>
   </div>
 </section>
 
@@ -104,7 +184,19 @@
 
 <div class="floating-cart" onclick="toggleCart()">🛒 Keranjang</div>
 <div class="cart-items" id="cartBox"></div>
-
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  function goSlide(idx){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+  setInterval(() => goSlide((current+1)%slides.length), 6000);
+</script>
 <script>
   const cart = [];
 
