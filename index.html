@@ -2,167 +2,161 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>CV. Sabiq Bejo - Telur Asin & Olahan</title>
-  <link rel="stylesheet" href="style.css">
+  <title>CV. Sabiq Bejo – Telur Asin & Olahan Khas Lamongan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #000;
+      --accent: #ffd700;
+      --bg: #fff;
+      --text: #333;
+    }
+    body {margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition: background .3s, color .3s;}
+    header {background:var(--primary); color:var(--accent); padding:2rem; text-align:center;}
+    .btn {background:var(--accent); color:var(--primary); padding:.8rem 1.2rem; border:none; cursor:pointer;}
+    section {padding:2rem;}
+    .card {border:1px solid #ddd; padding:1rem; border-radius:.5rem; margin:1rem; text-align:center;}
+    .gallery img {max-width:100%; height:auto; margin:5px; border:2px solid #ccc;}
+    .faq details {margin-bottom:1rem;}
+    .dark-mode {--bg:#000; --text:#fff;}
+    .stars {color: gold; font-size: 1.2rem;}
+    .floating-cart {position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: var(--primary); padding: 1rem; border-radius: 8px; cursor: pointer;}
+    .cart-items {display: none; position: fixed; bottom: 80px; right: 20px; background: #fff; border: 1px solid #ccc; padding: 1rem; width: 300px; max-height: 300px; overflow-y: auto; border-radius: 8px;}
+    .cart-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;}
+    .certificates img {width:80px; margin-right:10px;}
+  </style>
 </head>
 <body>
-  <header>
-    <h1>CV. Sabiq Bejo</h1>
-    <p>Telur Asin & Olahan Bebek Khas Lamongan</p>
-    <button class="btn" onclick="window.location='#contact'">Hubungi Kami</button>
-  </header>
+<header>
+  <h1>CV. Sabiq Bejo</h1>
+  <p>Telur Asin & Olahan Bebek Khas Lamongan</p>
+  <button class="btn" onclick="window.location='https://wa.me/6285645046550'">Hubungi Sekarang</button>
+</header>
 
-  <section id="about">
-    <h2>Tentang Kami</h2>
-    <p>Sabiq Bejo berdiri sejak 2009 di Kalitengah, Lamongan. Kami memproduksi telur asin dan olahan kreatif seperti sambal, abon, dan kerupuk telur asin dari bahan alami.</p>
-  </section>
-
-  <section id="products">
-    <h2>Produk Unggulan</h2>
-    <div class="card">
-      <h3>Telur Asin Original</h3>
-      <p>Rp 40.000</p>
-      <button onclick="tambahProduk('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
-    </div>
-    <div class="card">
-      <h3>Sambal Telur Asin</h3>
-      <p>Rp 25.000</p>
-      <button onclick="tambahProduk('Sambal Telur Asin', 25000)">Tambah ke Keranjang</button>
-    </div>
-    <div class="card">
-      <h3>Abon Telur Asin</h3>
-      <p>Rp 15.000</p>
-      <button onclick="tambahProduk('Abon Telur Asin', 15000)">Tambah ke Keranjang</button>
-    </div>
-    <div class="card">
-      <h3>Makaroni Telur Asin</h3>
-      <p>Rp 15.000</p>
-      <button onclick="tambahProduk('Makaroni Telur Asin', 15000)">Tambah ke Keranjang</button>
-    </div>
-  </section>
-
-  <section id="testimonials">
-    <h2>Testimoni</h2>
-    <blockquote>"Telurnya kenyal, rasa asin pas, nggak amis!"</blockquote>
-    <blockquote>"Sambalnya pedas mantap, cocok buat oleh-oleh."</blockquote>
-  </section>
-
-  <section id="contact">
-    <h2>Kontak</h2>
-    <p>WhatsApp: <a href="https://wa.me/6285645046550">0856-4504-6550</a></p>
-    <p>Instagram: <a href="https://instagram.com/sabiq.official">@sabiq.official</a></p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 CV. Sabiq Bejo | Halal | PIRT | UMKM Jatim</p>
-  </footer>
-
-  <!-- Floating Cart -->
-  <div id="keranjang">
-    <h4>🛒 Keranjang</h4>
-    <div id="keranjang-isi"></div>
-    <p id="keranjang-total">Total: Rp 0</p>
-    <button onclick="kirimWhatsApp()">Checkout via WA</button>
+<section id="products">
+  <h2>Produk Unggulan</h2>
+  <div class="card">
+    <h3>Telur Asin Original</h3>
+    <p>Rp 40.000 – tekstur kenyal, rasa pas</p>
+    <div class="stars">★★★★★</div>
+    <button class="btn" onclick="addToCart('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
   </div>
+  <div class="card">
+    <h3>Sambal Telur Asin</h3>
+    <p>Rp 25.000 – pedas mantap, cocok untuk oleh-oleh</p>
+    <div class="stars">★★★★☆</div>
+    <button class="btn" onclick="addToCart('Sambal Telur Asin', 25000)">Tambah ke Keranjang</button>
+  </div>
+</section>
 
-  <script>
-    let keranjang = [];
+<section id="gallery">
+  <h2>Galeri Produk</h2>
+  <div class="gallery">
+    <img src="foto1.jpg" alt="Telur Asin">
+    <img src="foto2.jpg" alt="Sambal">
+  </div>
+</section>
 
-    function tambahProduk(nama, harga) {
-      const index = keranjang.findIndex(item => item.nama === nama);
-      if (index !== -1) {
-        keranjang[index].jumlah += 1;
-      } else {
-        keranjang.push({ nama, harga, jumlah: 1 });
-      }
-      renderKeranjang();
-    }
+<section id="testimonials">
+  <h2>Testimoni</h2>
+  <blockquote>“Telurnya enak dan tidak amis!” – Budi, Surabaya</blockquote>
+  <blockquote>“Sambalnya pedasnya nampol!” – Rina, Gresik</blockquote>
+</section>
 
-    function kurangiProduk(nama) {
-      const index = keranjang.findIndex(item => item.nama === nama);
-      if (index !== -1) {
-        keranjang[index].jumlah -= 1;
-        if (keranjang[index].jumlah === 0) keranjang.splice(index, 1);
-      }
-      renderKeranjang();
-    }
+<section id="video">
+  <h2>Proses Produksi</h2>
+  <video width="100%" controls>
+    <source src="produksi.mp4" type="video/mp4">
+    Browser tidak mendukung video.
+  </video>
+</section>
 
-    function renderKeranjang() {
-      const container = document.getElementById('keranjang-isi');
-      container.innerHTML = '';
+<section id="faq" class="faq">
+  <h2>FAQ</h2>
+  <details>
+    <summary>Apakah tahan lama?</summary>
+    <p>Telur asin kami tahan hingga 2 minggu tanpa pengawet.</p>
+  </details>
+  <details>
+    <summary>Apakah tersedia di Tokopedia?</summary>
+    <p>Ya, cari "Sabiq Bejo" di Tokopedia dan Shopee.</p>
+  </details>
+</section>
 
-      let total = 0;
-      keranjang.forEach(item => {
-        total += item.harga * item.jumlah;
-        container.innerHTML += `
-          <div>
-            ${item.nama} x ${item.jumlah} 
-            <button onclick="kurangiProduk('${item.nama}')">−</button>
-            <button onclick="tambahProduk('${item.nama}', ${item.harga})">+</button>
-          </div>
-        `;
-      });
+<section id="certificates">
+  <h2>Sertifikasi</h2>
+  <div class="certificates">
+    <img src="halal.png" alt="Halal">
+    <img src="pirt.png" alt="PIRT">
+    <img src="umkm-jatim.png" alt="UMKM Jatim">
+  </div>
+</section>
 
-      document.getElementById('keranjang-total').textContent = 'Total: Rp ' + total.toLocaleString();
-    }
+<section id="map">
+  <h2>Lokasi Produksi</h2>
+  <iframe src="https://www.google.com/maps?q=Cluring+Kalitengah+Lamongan&output=embed" width="100%" height="300"></iframe>
+</section>
 
-    function kirimWhatsApp() {
-      let teks = '*Pesanan CV. Sabiq Bejo:*\n';
-      keranjang.forEach(item => {
-        teks += `- ${item.nama} x ${item.jumlah}\n`;
-      });
-      const total = keranjang.reduce((acc, item) => acc + (item.harga * item.jumlah), 0);
-      teks += `\nTotal: Rp ${total.toLocaleString()}`;
-      window.open(`https://wa.me/6285645046550?text=${encodeURIComponent(teks)}`);
-    }
-  </script>
+<section id="footer">
+  <button class="btn" onclick="toggleDarkMode()">Mode Gelap</button>
+  <p>&copy; 2025 CV. Sabiq Bejo | Lamongan, Indonesia</p>
+</section>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      color: #333;
+<div class="floating-cart" onclick="toggleCart()">🛒 Keranjang</div>
+<div class="cart-items" id="cartBox"></div>
+
+<script>
+  const cart = [];
+
+  function addToCart(name, price) {
+    const item = cart.find(i => i.name === name);
+    if (item) {
+      item.qty++;
+    } else {
+      cart.push({ name, price, qty: 1 });
     }
-    header {
-      background: #000;
-      color: #ffd700;
-      padding: 2rem;
-      text-align: center;
+    renderCart();
+  }
+
+  function renderCart() {
+    const box = document.getElementById('cartBox');
+    box.innerHTML = '<h3>Review Pesanan</h3>' + cart.map(item => `
+      <div class="cart-item">
+        ${item.name} (x${item.qty}) - Rp ${item.qty * item.price}
+        <button onclick="updateQty('${item.name}', -1)">−</button>
+        <button onclick="updateQty('${item.name}', 1)">+</button>
+      </div>
+    `).join('') + '<button class="btn" onclick="checkout()">Checkout</button>';
+  }
+
+  function updateQty(name, change) {
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+    item.qty += change;
+    if (item.qty <= 0) {
+      const index = cart.indexOf(item);
+      cart.splice(index, 1);
     }
-    .btn {
-      background: #ffd700;
-      color: #000;
-      padding: .8rem 1.2rem;
-      border: none;
-      cursor: pointer;
-    }
-    section {
-      padding: 2rem;
-    }
-    .card {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: .5rem;
-      margin: 1rem 0;
-      text-align: center;
-    }
-    #keranjang {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ffd700;
-      color: #000;
-      padding: 1rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      z-index: 999;
-      width: 250px;
-    }
-    #keranjang button {
-      margin: 0 5px;
-      padding: 2px 6px;
-      font-size: 16px;
-    }
-  </style>
+    renderCart();
+  }
+
+  function toggleCart() {
+    const box = document.getElementById('cartBox');
+    box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function checkout() {
+    let message = 'Saya ingin memesan:%0A';
+    cart.forEach(item => {
+      message += `- ${item.name} x${item.qty} (Rp ${item.qty * item.price})%0A`;
+    });
+    window.open('https://wa.me/6285645046550?text=' + message, '_blank');
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+</script>
+
 </body>
 </html>
