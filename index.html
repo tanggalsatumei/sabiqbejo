@@ -225,7 +225,20 @@
     padding: .5rem 0;
   }
 }
-
+.card img,
+  .gallery-card img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    width: 100%;
+    max-width: 200px;
+    border-radius: 10px;
+  }
+  .lightbox img {
+    aspect-ratio: auto;
+    object-fit: contain;
+    max-width: 90%;
+    max-height: 80%;
+  }
   </style>
 </head>
 <body>
