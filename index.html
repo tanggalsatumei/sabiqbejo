@@ -78,10 +78,7 @@
       background: var(--primary);
       margin-top: 1rem;
     }
-    .slide-content {
-    flex-direction: row;
-    text-align: left;
-  }
+    
     .nav-menu.active {
       display: flex;
     }
@@ -299,28 +296,44 @@
     .slide.active {
       opacity: 1;
     }
-    .slide-content {
+    .slide::before {
+  content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.7); /* hitam semi-transparan */
-  color: #ffd700;
-  z-index: 10;
-  text-align: center;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Overlay hitam transparan */
+  z-index: 1;
 }
 
-.slide-content h2,
-.slide-content p {
-  margin: 0.5rem 0;
+.slide-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: transparent;
+  color: #ffd700;
+  max-width: 1000px;
+  width: 100%;
+  flex-wrap: wrap;
+  text-align: left;
 }
+
+    @media (max-width: 768px) {
+  .slide-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .slide-content img {
+    max-width: 200px;
+  }
+}
+
 
 /* Untuk dark mode */
 body.dark-mode .slide-content {
