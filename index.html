@@ -78,6 +78,10 @@
       background: var(--primary);
       margin-top: 1rem;
     }
+    .slide-content {
+    flex-direction: row;
+    text-align: left;
+  }
     .nav-menu.active {
       display: flex;
     }
@@ -296,15 +300,33 @@
       opacity: 1;
     }
     .slide-content {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      padding: 2rem;
-      background: rgba(255,255,255,0.9);
-      border-radius: 1rem;
-      max-width: 1000px;
-      z-index: 10;
-    }
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7); /* hitam semi-transparan */
+  color: #ffd700;
+  z-index: 10;
+  text-align: center;
+}
+
+.slide-content h2,
+.slide-content p {
+  margin: 0.5rem 0;
+}
+
+/* Untuk dark mode */
+body.dark-mode .slide-content {
+  color: #fff;
+}
+
     .slide-content img {
       width: 250px;
       aspect-ratio: 1/1;
