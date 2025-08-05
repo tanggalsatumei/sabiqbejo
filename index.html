@@ -55,13 +55,58 @@
     .dots {position:absolute; bottom:10px; width:100%; text-align:center; z-index:1;}
     .dot {display:inline-block; width:12px; height:12px; margin:0 5px; background:#fff; border-radius:50%; cursor:pointer; opacity:.6;}
     .dot.active {background:#ffd700; opacity:1;}
+:root {
+      --primary: #000;
+      --accent: #ffd700;
+      --bg: #fff;
+      --text: #333;
+      --cart-bg: #fff;
+      --cart-text: #000;
+    }
+    body {margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition: background .3s, color .3s;}
+    header {background:var(--primary); color:var(--accent); padding:1rem; position:sticky; top:0; z-index:1000;}
+    nav {display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;}
+    nav ul {display:flex; list-style:none; padding:0; margin:0; gap:1rem;}
+    nav a {color:var(--accent); text-decoration:none; font-weight:bold;}
+    .btn {background:var(--accent); color:var(--primary); padding:.6rem 1rem; border:none; cursor:pointer; border-radius:4px;}
+    .btn-toggle {margin-left:1rem; background:none; color:var(--accent); border:1px solid var(--accent);}
+    section {padding:2rem; max-width:1200px; margin:auto;}
+    .card {border:1px solid #ddd; padding:1rem; border-radius:.5rem; margin:1rem; text-align:center; display:flex; flex-direction:column; align-items:center;}
+    .card img {width:100%; max-width:200px; border-radius:10px; margin-bottom:1rem;}
+    .products-grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;}
+    .gallery img {max-width:100%; height:auto; margin:5px; border:2px solid #ccc;}
+    .faq details {margin-bottom:1rem;}
+    .dark-mode {--bg:#000; --text:#fff; --cart-bg:#fff; --cart-text:#000;}
+    .stars {color: gold; font-size: 1.2rem;}
+    .floating-cart {position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: var(--primary); padding: 1rem; border-radius: 8px; cursor: pointer;}
+    .cart-items {display: none; position: fixed; bottom: 80px; right: 20px; background: var(--cart-bg); color: var(--cart-text); border: 1px solid #ccc; padding: 1rem; width: 300px; max-height: 300px; overflow-y: auto; border-radius: 8px; z-index: 999;}
+    .cart-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;}
+    .certificates img {width:80px; margin-right:10px;}
+    #hero {position:relative; height:80vh; overflow:hidden;}
+    .slide {position:absolute; top:0; left:0; width:100%; height:100%; background-size:cover; background-position:center; opacity:0; transition:opacity .6s; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:0; color:#ffd700;}
+    .slide:before {content:''; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:-1;}
+    .slide.active {opacity:1;}
+    .slide h2 {font-size:2.5rem; margin-bottom:.5rem;}
+    .slide p {font-size:1.2rem; margin-bottom:1rem;}
+    .dots {position:absolute; bottom:10px; width:100%; text-align:center; z-index:1;}
+    .dot {display:inline-block; width:12px; height:12px; margin:0 5px; background:#fff; border-radius:50%; cursor:pointer; opacity:.6;}
+    .dot.active {background:#ffd700; opacity:1;}
   </style>
 </head>
 <body>
 <header>
-  <h1>CV. Sabiq Bejo</h1>
-  <p>Telur Asin & Olahan Bebek Khas Lamongan</p>
-  <button class="btn" onclick="window.location='https://wa.me/6285645046550'">Hubungi Sekarang</button>
+  <nav>
+    <div><strong>CV. Sabiq Bejo</strong></div>
+    <ul>
+      <li><a href="#hero">Beranda</a></li>
+      <li><a href="#products">Produk</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#map">Lokasi</a></li>
+    </ul>
+    <button class="btn-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </nav>
 </header>
 
 <section id="hero">
@@ -196,6 +241,10 @@
     dots[current].classList.add('active');
   }
   setInterval(() => goSlide((current+1)%slides.length), 6000);
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
 </script>
 <script>
   const cart = [];
