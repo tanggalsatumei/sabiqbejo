@@ -206,16 +206,18 @@
   }
 
   .floating-cart {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--accent);
-      color: var(--primary);
-      padding: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 2000;
-    }
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: var(--primary);
+  padding: 0.8rem 1rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  z-index: 999;
+}
+
     .cart-items {
       display: none;
       position: fixed;
@@ -247,6 +249,18 @@
       padding: 2px 6px;
       border-radius: 50%;
     }
+
+    .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
 
   .certificates img {
     width: 80px;
@@ -396,25 +410,129 @@ body.dark-mode .slide-content {
     border: 0;
     border-radius: 10px;
   }
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--primary);
+  color: var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+    .rating-fixed {
+  position: fixed;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  font-size: 1.2rem;
+  z-index: 999;
+}
+.whatsapp-fixed {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 40px;
+  font-weight: bold;
+  text-decoration: none;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#btnTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0.6rem 1rem;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 999;
+}
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background: var(--primary);
+  color: var(--accent);
+  padding: 2rem;
+  transition: left 0.3s ease;
+  z-index: 1001;
+}
+
+.side-menu.active {
+  left: 0;
+}
+
+.side-menu .close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--accent);
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 3rem;
+}
+
+.side-menu li {
+  margin: 1.5rem 0;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
 </style>
 
 </head>
 <body>
 <header>
-  <nav>
-  <div class="logo">CV. Sabiq Bejo</div>
+  <nav class="header-bar">
   <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  <ul id="nav-menu" class="nav-menu">
+  <div class="logo">CV. Sabiq Bejo</div>
+  <button class="btn-toggle" onclick="toggleDarkMode()">🌙</button>
+</nav>
+<div id="sideMenu" class="side-menu">
+  <button class="close-btn" onclick="toggleMenu()">×</button>
+  <ul>
     <li><a href="#hero">Beranda</a></li>
     <li><a href="#products">Produk</a></li>
     <li><a href="#gallery">Galeri</a></li>
     <li><a href="#testimonials">Testimoni</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact">Lokasi</a></li>
+    <li><a href="#contact">Kontak</a></li>
   </ul>
-  <button class="btn-toggle" onclick="toggleDarkMode()">🌙</button>
-</nav>
+</div>
 
 </header>
   <div id="hero">
@@ -428,6 +546,10 @@ body.dark-mode .slide-content {
         </div>
       </div>
     </div>
+    <div class="rating-fixed">
+  ★★★★★ <br><small>Penilaian Pelanggan</small>
+</div>
+
     <div class="slide" style="background-color:#eee">
       <div class="slide-content">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Coat_of_arms_of_Lamongan_Regency.svg" alt="Produk 2">
@@ -553,9 +675,18 @@ body.dark-mode .slide-content {
 
 
 <div class="floating-cart" onclick="toggleCart()">
-    🛒 <span id="cartBadge" class="cart-badge" style="display:none">0</span>
-  </div>
+  🛒<span class="cart-count" id="cart-count">0</span>
+</div>
+
   <div class="cart-items" id="cartBox"></div>
+
+  <button onclick="scrollToTop()" id="btnTop">↑</button>
+
+  <a href="https://wa.me/6285645046550" class="whatsapp-fixed" target="_blank">
+  🟢 Chat via WhatsApp
+</a>
+
+  
 <script>
   let current = 0;
   const slides = document.querySelectorAll('.slide');
@@ -576,8 +707,9 @@ body.dark-mode .slide-content {
     document.body.classList.toggle('dark-mode');
   }
   function toggleMenu() {
-  document.getElementById('nav-menu').classList.toggle('active');
+  document.getElementById('sideMenu').classList.toggle('active');
 }
+
 
 </script>
   <script>
@@ -620,6 +752,11 @@ body.dark-mode .slide-content {
       }
     });
   });
+
+  function updateCartCount() {
+  document.getElementById('cart-count').innerText = cart.reduce((a, i) => a + i.qty, 0);
+}
+
 </script>
 
 <script>
@@ -667,6 +804,11 @@ body.dark-mode .slide-content {
       });
       window.open('https://wa.me/62856xxxxx?text=' + message, '_blank');
     }
+
+  function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 </script>
 
 </body>
