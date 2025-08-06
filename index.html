@@ -775,19 +775,22 @@ body.dark-mode .slide-content {
       margin: auto;
     }
     .testimonial-slider {
-  width: 100%;
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.testimonial-card {
-  flex: 0 0 33.3333%; /* tampil 3 item sekaligus */
-  box-sizing: border-box;
-}
-
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .testimonial-card {
+      flex: 0 0 auto;
+      width: 300px;
+      margin: 0 10px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background: white;
+    }
     .testimonial-card img {
       width: 100%;
-      max-width: 300px;
+      max-width: 100%;
       border-radius: 10px;
       margin-bottom: 1rem;
     }
@@ -809,18 +812,12 @@ body.dark-mode .slide-content {
     .testimonial-next {
       right: 0;
     }
-
     @media (max-width: 768px) {
-  .testimonial-card {
-    flex: 0 0 100%; /* tampil 1 per layar */
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .testimonial-card {
-    flex: 0 0 50%; /* tampil 2 per layar */
-  }
-}
+      .testimonial-card {
+        width: 100%;
+        margin: 0;
+      }
+    }
 
   </style>
 
@@ -1178,56 +1175,33 @@ body.dark-mode .slide-content {
     // Galeri slider
     let galleryIndex = 0;
     function updateGallery() {
-  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  galleryIndex = Math.max(0, Math.min(galleryIndex, maxIndex));
-  document.getElementById('gallerySlider').style.transform = `translateX(-${galleryIndex * 100}%)`;
-}
-
+      const container = document.getElementById('gallerySlider');
+      container.style.transform = `translateX(-${galleryIndex * 320}px)`;
+    }
     function nextGallery() {
-  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  galleryIndex = (galleryIndex + 1) > maxIndex ? 0 : galleryIndex + 1;
-  updateGallery();
-}
-
-function prevGallery() {
-  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  galleryIndex = (galleryIndex - 1 + maxIndex + 1) % (maxIndex + 1);
-  updateGallery();
-}
-
+      const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
+      if (galleryIndex < total - 1) galleryIndex++;
+      updateGallery();
+    }
+    function prevGallery() {
+      if (galleryIndex > 0) galleryIndex--;
+      updateGallery();
+    }
     setInterval(nextGallery, 5000);
 
-    // Testimoni slider
     let testiIndex = 0;
     function updateTestimonial() {
-      //document.getElementById('testimonialSlider').style.transform = `translateX(-${testiIndex * 100}%)`;
-      const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  testiIndex = Math.max(0, Math.min(testiIndex, maxIndex));
-  document.getElementById('testimonialSlider').style.transform = `translateX(-${galleryIndex * 100}%)`;
-
+      const container = document.getElementById('testimonialSlider');
+      container.style.transform = `translateX(-${testiIndex * 320}px)`;
     }
     function nextTestimonial() {
       const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  testiIndex = (testiIndex + 1) > maxIndex ? 0 : testiIndex + 1;
-  updateTestimonial();
+      if (testiIndex < total - 1) testiIndex++;
+      updateTestimonial();
     }
     function prevTestimonial() {
-      const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-      //const total = document.querySelectorAll('#testiSlider .testimonial-card').length;
-  const perView = 3;
-  const maxIndex = Math.ceil(total / perView) - 1;
-  testiIndex = (testiIndex - 1 + maxIndex + 1) % (maxIndex + 1);
-  updateTestimonial();
+      if (testiIndex > 0) testiIndex--;
+      updateTestimonial();
     }
     setInterval(nextTestimonial, 6000);
 </script>
