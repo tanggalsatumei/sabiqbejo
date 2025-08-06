@@ -481,6 +481,55 @@ body.dark-mode .slide-content {
   cursor: pointer;
 }
 
+/* ===== Cart Slide In Panel ===== */
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  z-index: 1004;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-panel.active {
+  right: 0;
+}
+
+.cart-item {
+  margin-bottom: 0.8rem;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.cart-item button {
+  background: var(--accent);
+  border: none;
+  margin: 0 5px;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.close-cart {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
 /* Badge berada di luar lingkaran cart */
 .cart-badge {
   position: absolute;
