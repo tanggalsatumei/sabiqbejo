@@ -427,18 +427,7 @@ body.dark-mode .slide-content {
   font-size: 1.2rem;
   z-index: 999;
 }
-.wa-floating {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #25D366;
-  color: white;
-  font-size: 1.5rem;
-  padding: 1rem;
-  border-radius: 50%;
-  z-index: 999;
-  text-decoration: none;
-}
+
 
 .scroll-top {
   position: fixed;
@@ -779,18 +768,14 @@ body.dark-mode .slide-content {
       transition: transform 0.5s ease;
     }
     .testimonial-card {
-      flex: 0 0 auto;
-      width: 300px;
-      margin: 0 10px;
+      flex: 0 0 33.33%;
+      box-sizing: border-box;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      background: white;
     }
     .testimonial-card img {
       width: 100%;
-      max-width: 100%;
+      max-width: 300px;
       border-radius: 10px;
       margin-bottom: 1rem;
     }
@@ -812,11 +797,15 @@ body.dark-mode .slide-content {
     .testimonial-next {
       right: 0;
     }
-    @media (max-width: 768px) {
-      .testimonial-card {
-        width: 100%;
-        margin: 0;
-      }
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    .whatsapp-float img {
+      width: 50px;
+      height: 50px;
     }
 
   </style>
@@ -1037,9 +1026,10 @@ body.dark-mode .slide-content {
 </div>
 
 
-  <!-- WhatsApp -->
-<a href="https://wa.me/6285645046550" target="_blank" class="wa-floating">📱</a>
-
+ <a href="https://wa.me/6281234567890" class="whatsapp-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat via WhatsApp">
+  </a>
+  
 <!-- Scroll to top -->
 <button onclick="scrollToTop()" class="scroll-top">↑</button>
 
@@ -1175,36 +1165,38 @@ body.dark-mode .slide-content {
     // Galeri slider
     let galleryIndex = 0;
     function updateGallery() {
-      const container = document.getElementById('gallerySlider');
-      container.style.transform = `translateX(-${galleryIndex * 320}px)`;
+      const gallerySlider = document.getElementById('gallerySlider');
+      const total = gallerySlider.children.length;
+      galleryIndex = (galleryIndex + total) % total;
+      gallerySlider.style.transform = `translateX(-${galleryIndex * 33.33}%)`;
     }
     function nextGallery() {
-      const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-      if (galleryIndex < total - 1) galleryIndex++;
+      galleryIndex++;
       updateGallery();
     }
     function prevGallery() {
-      if (galleryIndex > 0) galleryIndex--;
+      galleryIndex--;
       updateGallery();
     }
     setInterval(nextGallery, 5000);
 
     let testiIndex = 0;
     function updateTestimonial() {
-      const container = document.getElementById('testimonialSlider');
-      container.style.transform = `translateX(-${testiIndex * 320}px)`;
+      const testiSlider = document.getElementById('testimonialSlider');
+      const total = testiSlider.children.length;
+      testiIndex = (testiIndex + total) % total;
+      testiSlider.style.transform = `translateX(-${testiIndex * 33.33}%)`;
     }
     function nextTestimonial() {
-      const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-      if (testiIndex < total - 1) testiIndex++;
+      testiIndex++;
       updateTestimonial();
     }
     function prevTestimonial() {
-      if (testiIndex > 0) testiIndex--;
+      testiIndex--;
       updateTestimonial();
     }
     setInterval(nextTestimonial, 6000);
-</script>
+  </script>
 
 </body>
 </html>
