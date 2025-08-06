@@ -775,14 +775,16 @@ body.dark-mode .slide-content {
       margin: auto;
     }
     .testimonial-slider {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-    .testimonial-card {
-      flex: 0 0 100%;
-      padding: 1rem;
-      text-align: center;
-    }
+  width: 100%;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+  flex: 0 0 33.3333%; /* tampil 3 item sekaligus */
+  box-sizing: border-box;
+}
+
     .testimonial-card img {
       width: 100%;
       max-width: 300px;
@@ -921,6 +923,14 @@ body.dark-mode .slide-content {
           <img src="https://tse1.mm.bing.net/th/id/OIP.BtAibNz5ehl3j54NB8SC9gHaJQ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sambal Telur Asin">
           <p>Sambal Telur Asin</p>
         </div>
+        <div class="testimonial-card">
+          <img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin">
+          <p>Pelatihan</p>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://tse1.mm.bing.net/th/id/OIP.BtAibNz5ehl3j54NB8SC9gHaJQ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sambal Telur Asin">
+          <p>Pameran</p>
+        </div>
       </div>
       <button class="testimonial-nav testimonial-prev" onclick="prevGallery()">❮</button>
       <button class="testimonial-nav testimonial-next" onclick="nextGallery()">❯</button>
@@ -939,12 +949,20 @@ body.dark-mode .slide-content {
     <div class="testimonial-container">
       <div class="testimonial-slider" id="testimonialSlider">
         <div class="testimonial-card">
-          <img src="https://via.placeholder.com/300x200.png?text=Screenshot+1" alt="Testimoni 1">
+          <img src="https://i.kym-cdn.com/photos/images/original/001/062/924/537.png" alt="Testimoni 1">
           <p>Budi, Surabaya</p>
         </div>
         <div class="testimonial-card">
-          <img src="https://via.placeholder.com/300x200.png?text=Screenshot+2" alt="Testimoni 2">
+          <img src="https://th.bing.com/th/id/R.97a95e6013b62c1f7c5b9167c5bc095e?rik=2faW5mywcAaO4g&riu=http%3a%2f%2fwww.tech-wonders.com%2fwp-content%2fuploads%2f2014%2f11%2fwhatsapp-messages-blue-double-check-read.png&ehk=%2fp%2bixr%2f1bWCxlBS%2bnFIs9tpxTPSXf%2fyuEGAY49ALq6I%3d&risl=&pid=ImgRaw&r=0" alt="Testimoni 2">
           <p>Rina, Gresik</p>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://static1.anpoimages.com/wordpress/wp-content/uploads/2019/03/assistant-screen-contextual-movie.gif" alt="Testimoni 1">
+          <p>Badi, Lamongan</p>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://preview.redd.it/qx71jfmrflhz.png?auto=webp&s=eb6595f8fb773a3e5adb76e9f0bc6ded24ac2142" alt="Testimoni 2">
+          <p>Rini, Sidoarjo</p>
         </div>
       </div>
       <button class="testimonial-nav testimonial-prev" onclick="prevTestimonial()">❮</button>
@@ -1150,35 +1168,56 @@ body.dark-mode .slide-content {
     // Galeri slider
     let galleryIndex = 0;
     function updateGallery() {
-      document.getElementById('gallerySlider').style.transform = `translateX(-${galleryIndex * 100}%)`;
-    }
+  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  galleryIndex = Math.max(0, Math.min(galleryIndex, maxIndex));
+  document.getElementById('gallerySlider').style.transform = `translateX(-${galleryIndex * 100}%)`;
+}
+
     function nextGallery() {
-      const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-      galleryIndex = (galleryIndex + 1) % total;
-      updateGallery();
-    }
-    function prevGallery() {
-      const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
-      galleryIndex = (galleryIndex - 1 + total) % total;
-      updateGallery();
-    }
+  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  galleryIndex = (galleryIndex + 1) > maxIndex ? 0 : galleryIndex + 1;
+  updateGallery();
+}
+
+function prevGallery() {
+  const total = document.querySelectorAll('#gallerySlider .testimonial-card').length;
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  galleryIndex = (galleryIndex - 1 + maxIndex + 1) % (maxIndex + 1);
+  updateGallery();
+}
+
     setInterval(nextGallery, 5000);
 
     // Testimoni slider
     let testiIndex = 0;
     function updateTestimonial() {
-      document.getElementById('testimonialSlider').style.transform = `translateX(-${testiIndex * 100}%)`;
+      //document.getElementById('testimonialSlider').style.transform = `translateX(-${testiIndex * 100}%)`;
+      const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  testiIndex = Math.max(0, Math.min(testiIndex, maxIndex));
+  document.getElementById('testimonialSlider').style.transform = `translateX(-${galleryIndex * 100}%)`;
+
     }
     function nextTestimonial() {
       const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-      testiIndex = (testiIndex + 1) % total;
-      updateTestimonial();
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  testiIndex = (testiIndex + 1) > maxIndex ? 0 : testiIndex + 1;
+  updateTestimonial();
     }
     function prevTestimonial() {
       const total = document.querySelectorAll('#testimonialSlider .testimonial-card').length;
-      testiIndex = (testiIndex - 1 + total) % total;
-      updateTestimonial();
-    }
+      //const total = document.querySelectorAll('#testiSlider .testimonial-card').length;
+  const perView = 3;
+  const maxIndex = Math.ceil(total / perView) - 1;
+  testiIndex = (testiIndex - 1 + maxIndex + 1) % (maxIndex + 1);
+  updateTestimonial();
     setInterval(nextTestimonial, 6000);
 </script>
 
