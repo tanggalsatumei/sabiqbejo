@@ -240,15 +240,14 @@
       margin-bottom: 0.5rem;
     }
     .cart-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: red;
-      color: white;
-      font-size: 0.8rem;
-      padding: 2px 6px;
-      border-radius: 50%;
-    }
+  background: red;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
 
     .cart-count {
   position: absolute;
@@ -259,6 +258,36 @@
   font-size: 0.8rem;
   border-radius: 50%;
   padding: 2px 6px;
+}
+
+    .cart-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 320px;
+  height: 100%;
+  background: var(--cart-bg);
+  color: var(--cart-text);
+  padding: 1.5rem;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 2000;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.cart-panel.active {
+  right: 0;
+}
+
+.close-cart {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 2rem;
+  border: none;
+  background: none;
+  color: var(--cart-text);
+  cursor: pointer;
 }
 
 
@@ -440,19 +469,33 @@ body.dark-mode .slide-content {
   font-size: 1.2rem;
   z-index: 999;
 }
-.whatsapp-fixed {
+.wa-floating {
   position: fixed;
-  bottom: 70px;
-  right: 20px;
+  bottom: 20px;
+  left: 20px;
   background: #25D366;
   color: white;
-  padding: 0.8rem 1.2rem;
-  border-radius: 40px;
-  font-weight: bold;
-  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 50%;
   z-index: 999;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  text-decoration: none;
 }
+
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  background: var(--accent);
+  color: var(--primary);
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 999;
+}
+
 
 #btnTop {
   position: fixed;
@@ -510,6 +553,16 @@ body.dark-mode .slide-content {
   color: var(--accent);
   font-size: 1.5rem;
   font-weight: bold;
+}
+@media (min-width: 768px) {
+  .side-menu a {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 768px) {
+  .side-menu a {
+    font-size: 1.5rem;
+  }
 }
 
 </style>
@@ -675,20 +728,30 @@ body.dark-mode .slide-content {
 
 
 <div class="floating-cart" onclick="toggleCart()">
-  🛒<span class="cart-count" id="cart-count">0</span>
+  🛒 Keranjang <span id="cartCount" class="cart-badge">0</span>
 </div>
 
-  <div class="cart-items" id="cartBox"></div>
 
-  <button onclick="scrollToTop()" id="btnTop">↑</button>
+  <div id="cartBox" class="cart-panel">
+  <button onclick="toggleCart()" class="close-cart">×</button>
+  <h3>Review Pesanan</h3>
+  <div id="cartItemsList"></div>
+  <button class="btn" onclick="checkout()">Checkout</button>
+</div>
 
-  <a href="https://wa.me/6285645046550" class="whatsapp-fixed" target="_blank">
-  🟢 Chat via WhatsApp
-</a>
+
+  <!-- WhatsApp -->
+<a href="https://wa.me/6285645046550" target="_blank" class="wa-floating">📱</a>
+
+<!-- Scroll to top -->
+<button onclick="scrollToTop()" class="scroll-top">↑</button>
+
 
   
 <script>
   let current = 0;
+  let currentSlide = 0; // Tambahkan ini di awal
+
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
   function showSlide(n) {
@@ -754,7 +817,8 @@ body.dark-mode .slide-content {
   });
 
   function updateCartCount() {
-  document.getElementById('cart-count').innerText = cart.reduce((a, i) => a + i.qty, 0);
+  document.getElementById('cartCount').innerText = cart.reduce((sum, i) => sum + i.qty, 0);
+
 }
 
 </script>
@@ -771,19 +835,16 @@ body.dark-mode .slide-content {
       renderCart();
     }
     function renderCart() {
-      const box = document.getElementById('cartBox');
-      const badge = document.getElementById('cartBadge');
-      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
-      badge.innerText = totalItems;
-      badge.style.display = totalItems ? 'inline-block' : 'none';
-      box.innerHTML = '<h3>Review Pesanan</h3>' + cart.map(item => `
-        <div class="cart-item">
-          ${item.name} (x${item.qty}) - Rp ${item.qty * item.price}
-          <button onclick="updateQty('${item.name}', -1)">−</button>
-          <button onclick="updateQty('${item.name}', 1)">+</button>
-        </div>
-      `).join('') + '<button class="btn" onclick="checkout()">Checkout</button>';
-    }
+  const list = document.getElementById('cartItemsList');
+  if (!list) return;
+  list.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      ${item.name} (x${item.qty}) - Rp ${item.qty * item.price}
+      <button onclick="updateQty('${item.name}', -1)">−</button>
+      <button onclick="updateQty('${item.name}', 1)">+</button>
+    </div>
+  `).join('');
+}
     function updateQty(name, change) {
       const item = cart.find(i => i.name === name);
       if (!item) return;
@@ -794,9 +855,8 @@ body.dark-mode .slide-content {
       renderCart();
     }
     function toggleCart() {
-      const box = document.getElementById('cartBox');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    }
+  document.getElementById('cartBox').classList.toggle('active');
+}
     function checkout() {
       let message = 'Saya ingin memesan:%0A';
       cart.forEach(item => {
@@ -807,6 +867,13 @@ body.dark-mode .slide-content {
 
   function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+  // semua JS yang akses DOM
+});
+
 }
 
 </script>
