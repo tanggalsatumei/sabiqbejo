@@ -809,6 +809,19 @@ body.dark-mode .slide-content {
     .testimonial-next {
       right: 0;
     }
+
+    @media (max-width: 768px) {
+  .testimonial-card {
+    flex: 0 0 100%; /* tampil 1 per layar */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .testimonial-card {
+    flex: 0 0 50%; /* tampil 2 per layar */
+  }
+}
+
   </style>
 
 </head>
