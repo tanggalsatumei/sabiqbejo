@@ -787,10 +787,45 @@ body.dark-mode .slide-content {
       height: 50px;
     }
 
+    .promo-marquee {
+  background: gold;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.promo-label {
+  background: red;
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.countdown-timer {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: #000;
+  background: gold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+
   </style>
 
 </head>
 <body>
+  <div id="promo-bar" class="promo-marquee" style="display:none;">
+  <marquee behavior="scroll" direction="left">🔥 PROMO SPESIAL PAGI! Nikmati harga diskon selama 3 jam saja! 🔥</marquee>
+</div>
+
 <header>
     <nav class="header-bar">
       <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -857,6 +892,18 @@ body.dark-mode .slide-content {
 <section id="products">
   <h2>Produk Unggulan</h2>
   <div class="products-grid">
+    <div class="card promo" data-start="08:00" data-duration="3" data-diskon="40000">
+  <img src="https://static.wixstatic.com/media/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg/v1/fill/w_470,h_258,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg" alt="Telur Asin">
+  <h3>Telur Asin Asap</h3>
+  <p class="harga">
+    <span class="price-old" style="display:none">Rp 45.000</span>
+    <span class="price-new">Rp 40.000</span>
+  </p>
+  <div class="promo-label">PROMO</div>
+  <div class="countdown-timer"></div>
+  <button class="btn" onclick="addToCart('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
+</div>
+
     <div class="card">
       <img src="https://static.wixstatic.com/media/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg/v1/fill/w_470,h_258,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg" alt="Telur Asin">
       <h3>Telur Asin Original</h3>
@@ -1180,6 +1227,81 @@ testiSlider.style.transform = `translateX(-${testiIndex * (100 / visibleCards)}%
     }
     setInterval(nextTestimonial, 6000);
   </script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const promoStart = "08:00"; // waktu mulai promo (format 24jam)
+  const promoDuration = 3; // durasi promo dalam jam
+  const promoBar = document.getElementById('promo-bar');
+
+  function getTodayPromoTime(start, duration) {
+    const now = new Date();
+    const [h, m] = start.split(":").map(Number);
+    const promoStartTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+    const promoEndTime = new Date(promoStartTime.getTime() + duration * 60 * 60 * 1000);
+    return { start: promoStartTime, end: promoEndTime };
+  }
+
+  function updateCountdownTimers(endTime) {
+    const timers = document.querySelectorAll('.countdown-timer');
+    timers.forEach(timer => {
+      const interval = setInterval(() => {
+        const now = new Date();
+        const distance = endTime - now;
+        if (distance < 0) {
+          timer.innerText = '';
+          clearInterval(interval);
+        } else {
+          const h = Math.floor((distance / (1000 * 60 * 60)));
+          const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((distance % (1000 * 60)) / 1000);
+          timer.innerText = `Berakhir dalam ${h}j ${m}m ${s}d`;
+        }
+      }, 1000);
+    });
+  }
+
+  function activatePromo() {
+    promoBar.style.display = 'block';
+    const products = document.querySelectorAll('.card.promo');
+    products.forEach(card => {
+      const priceOld = card.querySelector('.price-old');
+      const priceNew = card.querySelector('.price-new');
+      if (priceOld && priceNew) priceOld.style.display = 'inline';
+    });
+  }
+
+  function deactivatePromo() {
+    promoBar.style.display = 'none';
+    const products = document.querySelectorAll('.card.promo');
+    products.forEach(card => {
+      const priceOld = card.querySelector('.price-old');
+      if (priceOld) priceOld.style.display = 'none';
+    });
+  }
+
+  const { start, end } = getTodayPromoTime(promoStart, promoDuration);
+  const now = new Date();
+
+  if (now >= start && now <= end) {
+    activatePromo();
+    updateCountdownTimers(end);
+  } else {
+    deactivatePromo();
+  }
+
+  // Cek tiap menit jika waktu baru masuk promo
+  setInterval(() => {
+    const now = new Date();
+    if (now >= start && now <= end) {
+      activatePromo();
+      updateCountdownTimers(end);
+    } else {
+      deactivatePromo();
+    }
+  }, 60000); // setiap menit
+});
+</script>
+
 
 </body>
 </html>
