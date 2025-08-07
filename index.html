@@ -815,6 +815,27 @@ body.dark-mode .slide-content {
   border-radius: 5px;
   font-weight: bold;
 }
+    
+.img-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.countdown-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 215, 0, 0.9); /* semi transparan emas */
+  color: #000;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.3rem 0;
+  font-weight: bold;
+  z-index: 10;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 
 
   </style>
@@ -864,6 +885,7 @@ body.dark-mode .slide-content {
     <div class="slide active" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.brd1mvVkN59LUpbUeez76gHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3')">
       <div class="slide-content">
         <img src="https://tse1.mm.bing.net/th/id/OIP.rxiw_oaGsvDBczgvlcHbUgHaGl?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Produk 1">
+        <div class="countdown-overlay"></div>
         <div class="slide-text">
           <h2>Telur Asin Original</h2>
           <p>Rasa gurih, tekstur lembut. Cocok untuk sarapan & hampers!</p>
@@ -875,7 +897,8 @@ body.dark-mode .slide-content {
     <div class="slide" style="background-color:#eee">
       <div class="slide-content">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Coat_of_arms_of_Lamongan_Regency.svg" alt="Produk 2">
-        <div class="slide-text">
+        <div class="countdown-overlay"></div>
+<div class="slide-text">
           <h2>Telur Asin Panggang</h2>
           <p>Dibakar dengan rempah pilihan. Wangi dan gurih maksimal!</p>
           <a href="https://wa.me/62856xxxxx" class="btn">Pesan Sekarang</a>
@@ -1272,10 +1295,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const promoBar = document.getElementById('promo-bar');
 
   function parseTime(str) {
-    const [h, m] = str.split(":").map(Number);
-    const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
-  }
+  if (!str || !str.includes(":")) return null;
+  const [h, m] = str.split(":").map(Number);
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+}
+
 
   function formatRp(num) {
     return `Rp ${num.toLocaleString('id-ID')}`;
@@ -1291,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const priceOldEl = card.querySelector('.price-old');
       const priceNewEl = card.querySelector('.price-new');
       const badge = card.querySelector('.promo-label');
-      const timer = card.querySelector('.countdown-timer');
+      const timer = card.querySelector('.countdown-overlay');
       const button = card.querySelector('button');
       const productName = card.querySelector('h3').innerText;
 
