@@ -819,6 +819,15 @@ body.dark-mode .slide-content {
 .img-wrapper {
   position: relative;
   width: 100%;
+  max-width: 200px;
+  margin-bottom: 1rem;
+}
+
+.img-wrapper img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .countdown-overlay {
@@ -826,16 +835,17 @@ body.dark-mode .slide-content {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 215, 0, 0.9); /* semi transparan emas */
+  background: rgba(255, 215, 0, 0.95); /* kuning emas semi transparan */
   color: #000;
   font-size: 0.85rem;
   text-align: center;
-  padding: 0.3rem 0;
+  padding: 0.4rem 0;
   font-weight: bold;
-  z-index: 10;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  z-index: 5;
 }
+
 
 
   </style>
@@ -939,8 +949,8 @@ body.dark-mode .slide-content {
      data-end="13:00"
      data-price-original="30000"
      data-diskon="25000">
-  <div class="img-wrapper">
-  <div class="countdown-overlay"><img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin Original">
+  <div class="img-wrapper"><img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin Original">
+  <div class="countdown-overlay">
   </div>
   </div><h3>Telur Asin Original</h3>
   <p>
