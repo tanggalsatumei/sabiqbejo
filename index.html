@@ -622,6 +622,35 @@ body.dark-mode .slide-content {
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+    #gallerySlider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+#gallerySlider .testimonial-card {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+}
+#gallerySlider .testimonial-card img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+    #testimonialSlider .testimonial-card img {
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px;
+}
+    #testimonialSlider .testimonial-card {
+  max-width: 240px;
+  margin: auto;
+}
+
+
+
     .gallery-grid-wrapper {
       position: relative;
       overflow: hidden;
@@ -989,7 +1018,7 @@ body.dark-mode .slide-content {
   let currentSlide = 0;
   let slideInterval;
   const slides = document.querySelectorAll('.slide');
-  if (!slides.length) return; // agar aman
+  //if (!slides.length) return; // agar aman
   const dots = document.querySelectorAll('.dot');
   const cart = [];
 
@@ -1119,8 +1148,7 @@ body.dark-mode .slide-content {
       const gallerySlider = document.getElementById('gallerySlider');
       const total = gallerySlider.children.length;
       galleryIndex = (galleryIndex + total) % total;
-      const visibleCards = 3; // bisa 1-3
-      gallerySlider.style.transform = `translateX(-${galleryIndex * (100 / visibleCards)}%)`;
+      gallerySlider.style.transform = `translateX(-${galleryIndex * 100}%)`;
     }
     function nextGallery() {
       galleryIndex++;
@@ -1130,6 +1158,7 @@ body.dark-mode .slide-content {
       galleryIndex--;
       updateGallery();
     }
+
     setInterval(nextGallery, 5000);
 
     let testiIndex = 0;
