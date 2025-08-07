@@ -1356,10 +1356,7 @@ document.addEventListener('DOMContentLoaded', () => {
           priceNewEl.innerText = formatRp(diskon);
         }
         if (badge) badge.style.display = 'inline-block';
-} else {
-  // Nonaktifkan promo
-  if (badge) badge.style.display = 'none';
-}
+
 
         const totalSec = Math.floor((end - now) / 1000);
         const h = Math.floor(totalSec / 3600);
