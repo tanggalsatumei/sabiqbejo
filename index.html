@@ -823,7 +823,7 @@ body.dark-mode .slide-content {
 </head>
 <body>
   <div id="promo-bar" class="promo-marquee" style="display:none;">
-  <marquee behavior="scroll" direction="left">🔥 PROMO SPESIAL PAGI! Nikmati harga <a href="#products">diskon</a> selama 3 jam saja! 🔥</marquee>
+  <a href="#products"><marquee behavior="scroll" direction="left">🔥 PROMO SPESIAL PAGI! Nikmati harga diskon selama 3 jam saja! 🔥</marquee></a>
 </div>
 
 <header>
@@ -908,6 +908,7 @@ body.dark-mode .slide-content {
 
     <div class="card promo" data-start="11:00" data-duration="3" data-diskon="30000">
       <img src="https://static.wixstatic.com/media/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg/v1/fill/w_470,h_258,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg" alt="Telur Asin">
+      <div class="countdown-timer"></div>
       <h3>Telur Asin Original</h3>
       <p><span class="price-old">Rp 45.000</span> <span class="price-new">Rp 40.000</span></p>
       <div class="stars">★★★★★</div>
@@ -1235,13 +1236,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const promoDuration = 3; // durasi promo dalam jam
   const promoBar = document.getElementById('promo-bar');
 
-  function getTodayPromoTime(start, duration) {
-    const now = new Date();
-    const [h, m] = start.split(":").map(Number);
-    const promoStartTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
-    const promoEndTime = new Date(promoStartTime.getTime() + duration * 60 * 60 * 1000);
-    return { start: promoStartTime, end: promoEndTime };
-  }
+  function getTodayPromoTime(card) {
+  const now = new Date();
+  const startAttr = card.dataset.start || "08:00"; // default ke 08:00 kalau tidak diisi
+  const durationAttr = parseInt(card.dataset.duration || "3"); // default 3 jam
+  const [h, m] = startAttr.split(":").map(Number);
+
+  const promoStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+  const promoEnd = new Date(promoStart.getTime() + durationAttr * 60 * 60 * 1000);
+
+  return { start: promoStart, end: promoEnd };
+}
 
   function updateCountdownTimers(endTime) {
     const timers = document.querySelectorAll('.countdown-timer');
@@ -1263,23 +1268,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function activatePromo() {
-    promoBar.style.display = 'block';
-    const products = document.querySelectorAll('.card.promo');
-    products.forEach(card => {
-      const priceOld = card.querySelector('.price-old');
-      const priceNew = card.querySelector('.price-new');
-      if (priceOld && priceNew) priceOld.style.display = 'inline';
-    });
-  }
+  promoBar.style.display = 'block';
+  const products = document.querySelectorAll('.card.promo');
+  products.forEach(card => {
+    const priceOld = card.querySelector('.price-old');
+    const priceNew = card.querySelector('.price-new');
+    const discount = parseInt(card.dataset.diskon);
+    const btn = card.querySelector('button');
 
-  function deactivatePromo() {
-    promoBar.style.display = 'none';
-    const products = document.querySelectorAll('.card.promo');
-    products.forEach(card => {
-      const priceOld = card.querySelector('.price-old');
-      if (priceOld) priceOld.style.display = 'none';
-    });
-  }
+    if (priceOld && priceNew && discount && btn) {
+      priceOld.style.display = 'inline';
+      priceNew.innerText = `Rp ${discount.toLocaleString('id-ID')}`;
+      btn.setAttribute('onclick', `addToCart('${card.querySelector('h3').innerText}', ${discount})`);
+    }
+  });
+}
+
+function deactivatePromo() {
+  promoBar.style.display = 'none';
+  const products = document.querySelectorAll('.card.promo');
+  products.forEach(card => {
+    const priceOld = card.querySelector('.price-old');
+    const priceNew = card.querySelector('.price-new');
+    const btn = card.querySelector('button');
+
+    if (priceOld && priceNew && btn) {
+      priceOld.style.display = 'none';
+      // Kembalikan ke harga asli (ambil dari price-old)
+      const original = parseInt(priceOld.innerText.replace(/\D/g, ''));
+      priceNew.innerText = `Rp ${original.toLocaleString('id-ID')}`;
+      btn.setAttribute('onclick', `addToCart('${card.querySelector('h3').innerText}', ${original})`);
+    }
+  });
+}
+
 
   const { start, end } = getTodayPromoTime(promoStart, promoDuration);
   const now = new Date();
@@ -1301,6 +1323,22 @@ document.addEventListener('DOMContentLoaded', () => {
       deactivatePromo();
     }
   }, 60000); // setiap menit
+});
+
+document.querySelectorAll('.card.promo').forEach(card => {
+  const { start, end } = getTodayPromoTime(card);
+  const now = new Date();
+
+  if (now >= start && now <= end) {
+    // Aktifkan promo untuk card ini
+    card.querySelector('.price-old').style.display = 'inline';
+    card.querySelector('.countdown-timer').style.display = 'block';
+    // dst...
+  } else {
+    // Promo belum atau sudah berakhir
+    card.querySelector('.price-old').style.display = 'none';
+    card.querySelector('.countdown-timer').style.display = 'none';
+  }
 });
 </script>
 
