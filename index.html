@@ -789,7 +789,7 @@ body.dark-mode .slide-content {
 
     .promo-marquee {
   background: gold;
-  color: #000;
+  color: black;
   font-weight: bold;
   padding: 0.5rem;
   text-align: center;
@@ -808,9 +808,8 @@ body.dark-mode .slide-content {
 }
 
 .countdown-timer {
-  font-size: 0.9rem;
   margin-top: 0.5rem;
-  color: #000;
+  font-size: 0.9rem;
   background: gold;
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
@@ -823,7 +822,7 @@ body.dark-mode .slide-content {
 </head>
 <body>
   <div id="promo-bar" class="promo-marquee" style="display:none;">
-  <a href="#products"><marquee behavior="scroll" direction="left">🔥 PROMO SPESIAL PAGI! Nikmati harga diskon selama 3 jam saja! 🔥</marquee></a>
+  <a href="#products"><marquee behavior="scroll" direction="left">🔥 FLASH SALE SEDANG BERLANGSUNG! Diskon Terbatas untuk Produk Tertentu 🔥</marquee></a>
 </div>
 
 <header>
@@ -892,19 +891,57 @@ body.dark-mode .slide-content {
 <section id="products">
   <h2>Produk Unggulan</h2>
   <div class="products-grid">
-    <div class="card promo" data-start="08:00" data-duration="3" data-diskon="40000">
-  <img src="https://static.wixstatic.com/media/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg/v1/fill/w_470,h_258,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg" alt="Telur Asin">
-      <div class="countdown-timer"></div>
-  <h3>Telur Asin Asap</h3>
-  <p class="harga">
+    <!-- Produk 1: Promo 08:00 - 11:00 -->
+<div class="card promo"
+     data-start="08:00"
+     data-end="11:00"
+     data-price-original="45000"
+     data-diskon="40000">
+  <img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin Original">
+  <h3>Telur Asin Original</h3>
+  <p>
     <span class="price-old" style="display:none">Rp 45.000</span>
-    <span class="price-new">Rp 40.000</span>
+    <span class="price-new">Rp 45.000</span>
   </p>
-  <div class="promo-label">PROMO</div>
-  
-      <div class="stars">★★★★★</div>
-  <button class="btn" onclick="addToCart('Telur Asin Original', 40000)">Tambah ke Keranjang</button>
+  <div class="promo-label" style="display:none;">PROMO</div>
+  <div class="countdown-timer"></div>
+  <button class="btn">Tambah ke Keranjang</button>
 </div>
+
+<!-- Produk 2: Promo 08:00 - 11:00 -->
+<div class="card promo"
+     data-start="08:00"
+     data-end="11:00"
+     data-price-original="30000"
+     data-diskon="25000">
+  <img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin Original">
+  <h3>Telur Asin Original</h3>
+  <p>
+    <span class="price-old" style="display:none">Rp 45.000</span>
+    <span class="price-new">Rp 45.000</span>
+  </p>
+  <div class="promo-label" style="display:none;">PROMO</div>
+  <div class="countdown-timer"></div>
+  <button class="btn">Tambah ke Keranjang</button>
+</div>
+
+<!-- Produk 3: Promo 14:00 - 15:00 -->
+<div class="card promo"
+     data-start="14:00"
+     data-end="15:00"
+     data-price-original="15000"
+     data-diskon="12000">
+  <img src="https://www.thedutchpantry.com.au/wp-content/uploads/2023/11/20231105_235533626_iOS.jpg" alt="Telur Asin Original">
+  <h3>Telur Asin Original</h3>
+  <p>
+    <span class="price-old" style="display:none">Rp 45.000</span>
+    <span class="price-new">Rp 45.000</span>
+  </p>
+  <div class="promo-label" style="display:none;">PROMO</div>
+  <div class="countdown-timer"></div>
+  <button class="btn">Tambah ke Keranjang</button>
+</div>
+
 
     <div class="card promo" data-start="11:00" data-duration="3" data-diskon="30000">
       <img src="https://static.wixstatic.com/media/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg/v1/fill/w_470,h_258,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/cc2c4c_ac1a0926907141d59e1b71226f6c14e9~mv2.jpg" alt="Telur Asin">
@@ -1232,114 +1269,70 @@ testiSlider.style.transform = `translateX(-${testiIndex * (100 / visibleCards)}%
   </script>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const promoStart = "09:00"; // waktu mulai promo (format 24jam)
-  const promoDuration = 3; // durasi promo dalam jam
   const promoBar = document.getElementById('promo-bar');
 
-  function getTodayPromoTime(card) {
-  const now = new Date();
-  const startAttr = card.dataset.start || "08:00"; // default ke 08:00 kalau tidak diisi
-  const durationAttr = parseInt(card.dataset.duration || "3"); // default 3 jam
-  const [h, m] = startAttr.split(":").map(Number);
-
-  const promoStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
-  const promoEnd = new Date(promoStart.getTime() + durationAttr * 60 * 60 * 1000);
-
-  return { start: promoStart, end: promoEnd };
-}
-
-  function updateCountdownTimers(endTime) {
-    const timers = document.querySelectorAll('.countdown-timer');
-    timers.forEach(timer => {
-      const interval = setInterval(() => {
-        const now = new Date();
-        const distance = endTime - now;
-        if (distance < 0) {
-          timer.innerText = '';
-          clearInterval(interval);
-        } else {
-          const h = Math.floor((distance / (1000 * 60 * 60)));
-          const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const s = Math.floor((distance % (1000 * 60)) / 1000);
-          timer.innerText = `Berakhir dalam ${h}j ${m}m ${s}d`;
-        }
-      }, 1000);
-    });
-  }
-
-  function activatePromo() {
-  promoBar.style.display = 'block';
-  const products = document.querySelectorAll('.card.promo');
-  products.forEach(card => {
-    const priceOld = card.querySelector('.price-old');
-    const priceNew = card.querySelector('.price-new');
-    const discount = parseInt(card.dataset.diskon);
-    const btn = card.querySelector('button');
-
-    if (priceOld && priceNew && discount && btn) {
-      priceOld.style.display = 'inline';
-      priceNew.innerText = `Rp ${discount.toLocaleString('id-ID')}`;
-      btn.setAttribute('onclick', `addToCart('${card.querySelector('h3').innerText}', ${discount})`);
-    }
-  });
-}
-
-function deactivatePromo() {
-  promoBar.style.display = 'none';
-  const products = document.querySelectorAll('.card.promo');
-  products.forEach(card => {
-    const priceOld = card.querySelector('.price-old');
-    const priceNew = card.querySelector('.price-new');
-    const btn = card.querySelector('button');
-
-    if (priceOld && priceNew && btn) {
-      priceOld.style.display = 'none';
-      // Kembalikan ke harga asli (ambil dari price-old)
-      const original = parseInt(priceOld.innerText.replace(/\D/g, ''));
-      priceNew.innerText = `Rp ${original.toLocaleString('id-ID')}`;
-      btn.setAttribute('onclick', `addToCart('${card.querySelector('h3').innerText}', ${original})`);
-    }
-  });
-}
-
-
-  const { start, end } = getTodayPromoTime(promoStart, promoDuration);
-  const now = new Date();
-
-  if (now >= start && now <= end) {
-    activatePromo();
-    updateCountdownTimers(end);
-  } else {
-    deactivatePromo();
-  }
-
-  // Cek tiap menit jika waktu baru masuk promo
-  setInterval(() => {
+  function parseTime(str) {
+    const [h, m] = str.split(":").map(Number);
     const now = new Date();
-    if (now >= start && now <= end) {
-      activatePromo();
-      updateCountdownTimers(end);
-    } else {
-      deactivatePromo();
-    }
-  }, 60000); // setiap menit
-});
-
-document.querySelectorAll('.card.promo').forEach(card => {
-  const { start, end } = getTodayPromoTime(card);
-  const now = new Date();
-
-  if (now >= start && now <= end) {
-    // Aktifkan promo untuk card ini
-    card.querySelector('.price-old').style.display = 'inline';
-    card.querySelector('.countdown-timer').style.display = 'block';
-    // dst...
-  } else {
-    // Promo belum atau sudah berakhir
-    card.querySelector('.price-old').style.display = 'none';
-    card.querySelector('.countdown-timer').style.display = 'none';
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
   }
+
+  function formatRp(num) {
+    return `Rp ${num.toLocaleString('id-ID')}`;
+  }
+
+  function updatePromoProducts() {
+    const now = new Date();
+    let anyPromoActive = false;
+
+    document.querySelectorAll('.card.promo').forEach(card => {
+      const start = parseTime(card.dataset.start);
+      const end = parseTime(card.dataset.end);
+      const priceOldEl = card.querySelector('.price-old');
+      const priceNewEl = card.querySelector('.price-new');
+      const badge = card.querySelector('.promo-label');
+      const timer = card.querySelector('.countdown-timer');
+      const button = card.querySelector('button');
+      const productName = card.querySelector('h3').innerText;
+
+      const original = parseInt(card.dataset.priceOriginal);
+      const diskon = parseInt(card.dataset.diskon);
+
+      if (now >= start && now <= end) {
+        anyPromoActive = true;
+
+        if (priceOldEl && priceNewEl) {
+          priceOldEl.style.display = 'inline';
+          priceNewEl.innerText = formatRp(diskon);
+        }
+        if (badge) badge.style.display = 'inline-block';
+
+        const totalSec = Math.floor((end - now) / 1000);
+        const h = Math.floor(totalSec / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        const s = totalSec % 60;
+        if (timer) timer.innerText = `Sisa waktu: ${h}j ${m}m ${s}d`;
+
+        if (button) button.setAttribute('onclick', `addToCart('${productName}', ${diskon})`);
+      } else {
+        if (priceOldEl && priceNewEl) {
+          priceOldEl.style.display = 'none';
+          priceNewEl.innerText = formatRp(original);
+        }
+        if (badge) badge.style.display = 'none';
+        if (timer) timer.innerText = '';
+        if (button) button.setAttribute('onclick', `addToCart('${productName}', ${original})`);
+      }
+    });
+
+    // Promo bar global aktif jika ada produk promo aktif
+    if (promoBar) promoBar.style.display = anyPromoActive ? 'block' : 'none';
+  }
+
+  updatePromoProducts();
+  setInterval(updatePromoProducts, 1000); // update tiap detik
 });
+
 </script>
 
 
